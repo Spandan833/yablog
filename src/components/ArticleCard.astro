@@ -2,11 +2,12 @@
 const {article} = Astro.props
 
 import {formatDate} from '../utils'
+import Tags from '../components/Tags.astro'
 ---
 
 <div class="max-w-md mx-auto mt-10">
     <div class="bg-white rounded-lg overflow-hidden shadow-lg">
-      <a href="article.html">
+      <a href={"/articles/"+article.slug}>
         <img
           src={"/images/"+article.data.image}
           alt="Article Image"
@@ -15,18 +16,10 @@ import {formatDate} from '../utils'
       </a>
       <div class="p-6">
         <h2 class="text-2xl font-semibold mb-2">
-          <a href={"/article/"+article.slug}>{article.data.title} </a>
+          <a href={"/articles/"+article.slug}>{article.data.title} </a>
         </h2>
         <p class="text-gray-600 text-sm mb-4">{article.data.pubDate}</p>
-        <div class="flex flex-wrap gap-2">
-          {article.data.tags.map((tag : string,index : number) => (
-            <span
-          class={index % 2 == 0 ?"px-2 py-1 bg-blue-500 text-white rounded-full text-xs hover:opacity-90" : "px-2 py-1 bg-red-500 text-white rounded-full text-xs hover:opacity-90"}
-          ><a href={"/articles/tag/"+tag}>{tag}</a></span>
-          )
-
-        )}
-        </div>
+        <Tags tags={article.data.tags}/>
       </div>
     </div>
   </div>

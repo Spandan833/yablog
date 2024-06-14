@@ -1,0 +1,30 @@
+---
+import MainLayout from '../../../layouts/main.astro'
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import {formatDate} from "../../../utils"
+import ArticleCard from '../../../components/ArticleCard.astro';
+const allBlogArticles: CollectionEntry<'blog'>[] = (await getCollection('blog'))
+                                                      .sort((a: CollectionEntry<'blog'>, b:CollectionEntry<'blog'>) => {
+                                                            return b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+                                                    })
+const {tag} = Astro.params
+
+if(tag === undefined){
+    throw new Error("tag not found")
+}
+
+const tagArticles = allBlogArticles.filter(article => article.data.tags.includes(tag))
+---
+
+<MainLayout>
+    <h1 class="text-2xl pb-3">{tag}</h1>
+    <a href="/articles" class="inline-block bg-gray-100 p-2 mb-6 hover:bg-indigo-500 hover:text-white">Back To Articles</a>
+      <!-- Main Grid -->
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {tagArticles.map(article => 
+          <ArticleCard article={article}/>
+          )}
+      </div>
+</MainLayout>

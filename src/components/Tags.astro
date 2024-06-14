@@ -1,0 +1,23 @@
+---
+import type { ActionError } from 'astro:actions'
+
+import { getActionProps } from 'astro:actions'
+
+const {tags} = Astro.props
+import {capitalize} from "../utils";
+
+interface Props{
+    tags: string[]
+}
+---
+
+<div class="flex flex-wrap gap-2">
+    {tags.map((tag : string,index : number) => (
+      <span
+    class={index % 2 == 0 ?"px-2 py-1 bg-blue-500 text-white rounded-full text-xs hover:opacity-90" 
+    : "px-2 py-1 bg-red-500 text-white rounded-full text-xs hover:opacity-90"}>
+      <a href={"/articles/tags/"+tag}>#{capitalize(tag)}</a>
+      </span>
+    )
+    )}
+</div>
