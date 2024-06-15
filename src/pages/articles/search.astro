@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from '../../layouts/main.astro'
+import type { CollectionEntry } from 'astro:content';
+import ArticleCard from '../../components/ArticleCard.astro';
+import SearchForm from '../../components/SearchForm.astro';
+const allBlogArticles : CollectionEntry<'blog'>[] = await (getCollection('blog'));
+
+const  query = Astro.url.searchParams.get('query');
+
+const searchArticles = allBlogArticles.filter((article) => {
+    let bodyMatch : boolean = article.body.toLowerCase().includes(query!.toLowerCase())
+
+    let titleMatch : boolean = article.data.title.toLowerCase().includes(query!.toLowerCase());
+
+    let slugMatch : boolean = article.slug.toLowerCase().includes(query!.toLowerCase());
+
+    return bodyMatch || titleMatch || slugMatch
+})
+---
+
+<MainLayout>
+    <SearchForm/>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {searchArticles.map(article => 
+          <ArticleCard article={article}/>
+          )}
+      </div>
+</MainLayout>
