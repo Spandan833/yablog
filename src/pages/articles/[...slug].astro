@@ -1,8 +1,21 @@
 ---
-import type { GetStaticPaths } from "astro";
 import MainLayout from "../../layouts/main.astro"
-import { getCollection } from "astro:content"
-import type { CollectionEntry } from "astro:content"
+import { formatDate, getArticles } from "../../utils";
+import Tags from "../../components/Tags.astro";
+
+const {slug} = Astro.params
+
+if(slug === undefined){
+    throw new Error("Not found");
+}
+
+const entries = await getArticles();
+
+const entry = entries.find(entry => entry.slug == slug);
+
+if(entry === undefined){
+    return Astro.redirect('/404')
+}
 
 // ----static website-------
 
@@ -18,38 +31,16 @@ import type { CollectionEntry } from "astro:content"
 
 // const {entry} = Astro.props
 
-
-
-
-import {getEntry} from 'astro:content'
-import { formatDate } from "../../utils";
-import { array } from "astro/zod";
-import Tags from "../../components/Tags.astro";
-
-const {slug} = Astro.params
-
-if(slug === undefined){
-    throw new Error("Not found");
-}
-
-const entry = await getEntry('blog',slug)
-console.log(slug);
-
-if(entry === undefined){
-    return Astro.redirect('/404')
-}
-
-const {Content} = await entry.render()
 ---
 <MainLayout>
-<h1>{entry.data.title}</h1>
-<a href="/articles" class="inline-block bg-gray-100 p-2 mb-6 hover:bg-indigo-500 hover:text-white">Back To Articles</a>
-      <article>
-        <h1 class="text-4xl font-bold mb-2"> {entry.data.title}</h1>
-        <h3 class="text-lg mb-2">Written by {entry.data.author} on  {formatDate(entry.data.pubDate)}}</h3>
-        <Tags tags={entry.data.tags}/>
-        <img src={"/images/"+entry.data.image} alt="Article Image" class="w-full h-auto rounded-xl mb-6" />
-        <Content/>
+    <h1>{entry.title}</h1>
+    <a href="/articles" class="inline-block bg-gray-100 p-2 mb-6 hover:bg-indigo-500 hover:text-white">Back To Articles</a>
+    <article>
+        <h1 class="text-4xl font-bold mb-2"> {entry.title}</h1>
+        <h3 class="text-lg mb-2">Written by {entry.author} on  {formatDate(entry.pubDate)}}</h3>
+        <Tags tags={entry.tags}/>
+        <img src={entry.imageUrl} alt="Article Image" class="w-full h-auto rounded-xl mb-6" />
+        <div set:html={entry.html}/>
     </article>
 </MainLayout>
 

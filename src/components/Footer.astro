@@ -1,13 +1,14 @@
 ---
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
+import { getArticles, type ArticleX } from "../utils";
 
-const allBlogCollections : CollectionEntry<'blog'>[] = (await getCollection('blog'))
-.sort((a : CollectionEntry<'blog'>, b : CollectionEntry<'blog'>) => b.data.pubDate.valueOf()-a.data.pubDate.valueOf()
+const allBlogCollections : ArticleX[] = (await getArticles())
+.sort((a : ArticleX, b : ArticleX) => b.pubDate.valueOf()-a.pubDate.valueOf()
 )
 
 let tagCollection : string[] = [];
-allBlogCollections.map(article => article.data.tags.map(tag => tagCollection.push(tag)))
+allBlogCollections.map(article => article.tags.map(tag => tagCollection.push(tag)))
 let tagSet = new Set(tagCollection);
 tagCollection = Array.from(tagSet)
 console.log(tagSet.size)
