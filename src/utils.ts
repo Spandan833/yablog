@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import environment from 'dotenv/config'
+import 'dotenv/config'
 import gm from 'gray-matter'
 import {remark} from 'remark'
 import html from 'remark-html'
