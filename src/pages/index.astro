@@ -6,19 +6,28 @@ import MostRecentArticle from '../components/MostRecentArticle.astro';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import { HOMEPAGE_ARTICLE_LIMIT } from '../constants';
-import {formatDate} from '../utils'
+import {formatDate, type ArticleX} from '../utils'
+import { createClient } from '@supabase/supabase-js'
 import Tags from "../components/Tags.astro"
-const allBlogCollections : CollectionEntry<'blog'>[] = (await getCollection('blog'))
-.sort((a : CollectionEntry<'blog'>, b : CollectionEntry<'blog'>) => b.data.pubDate.valueOf()-a.data.pubDate.valueOf()
+import gm from 'gray-matter'
+import { remark } from 'remark';
+import html from 'remark-html';
+import {getArticles} from '../utils.ts'
+
+
+const allBlogCollections : ArticleX[] = (await getArticles())
+.sort((a : ArticleX, b : ArticleX) => b.pubDate.valueOf()-a.pubDate.valueOf()
 )
 
-const mostRecentArticle :CollectionEntry<'blog'> = allBlogCollections[0]
+const mostRecentArticle :ArticleX = allBlogCollections[0]
 
-const otherArticles : CollectionEntry<'blog'>[] = allBlogCollections.slice(1)
+const otherArticles : ArticleX[] = allBlogCollections.slice(1)
 
 let tagCollection : string[] = [];
-allBlogCollections.map(article => tagCollection.concat(article.data.tags))
+allBlogCollections.map(article => tagCollection.concat(article.tags))
 let tagSet = new Set(tagCollection);
+
+
 ---
 <MainLayout title='Recipe for disaster'>
   <div class="grid grid-cols-1 gap-5 lg:grid-cols-2">
@@ -38,17 +47,17 @@ let tagSet = new Set(tagCollection);
       <div class="bg-white rounded-lg overflow-hidden shadow-lg">
         <a href={"/articles/"+article.slug}>
           <img
-            src={"/images/"+article.data.image}
+            src={article.imageUrl}
             alt="Article Image"
             class="w-full h-48 object-cover hover:opacity-75 transition duration-300 ease-in-out"
           />
         </a>
         <div class="p-6">
           <h2 class="text-2xl font-semibold mb-2">
-            <a href={"/articles/"+article.slug}> {article.data.title} </a>
+            <a href={"/articles/"+article.slug}> {article.title} </a>
           </h2>
-          <p class="text-gray-600 text-sm mb-4">{formatDate(article.data.pubDate)}</p>
-          <Tags tags={article.data.tags}/>
+          <p class="text-gray-600 text-sm mb-4">{formatDate(article.pubDate)}</p>
+          <Tags tags={article.tags}/>
         </div>
       </div>
       </div>
