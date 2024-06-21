@@ -22,13 +22,10 @@ if(entry === undefined){
 }
 
 
-let { data: comments, err } = await supabase
+let { data: comments } = await supabase
   .from('comments')
   .select('*')
 
-if(err){
-    return new Error(err)
-}
 
 let postComments = comments?.filter(comment => comment.post_id == entry.id)
 
