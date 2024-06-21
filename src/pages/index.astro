@@ -1,19 +1,12 @@
 ---
 import MainLayout from '../layouts/main.astro'
-import Image from 'astro/components/Image.astro'
 import SearchForm from '../components/SearchForm.astro'
 import MostRecentArticle from '../components/MostRecentArticle.astro';
-import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
 import { HOMEPAGE_ARTICLE_LIMIT } from '../constants';
 import {formatDate, type ArticleX} from '../utils'
-import { createClient } from '@supabase/supabase-js'
 import Tags from "../components/Tags.astro"
-import gm from 'gray-matter'
-import { remark } from 'remark';
-import html from 'remark-html';
 import {getArticles} from '../utils.ts'
-
+import Testimonials from '../components/Testimonials.astro';
 
 const allBlogCollections : ArticleX[] = (await getArticles())
 .sort((a : ArticleX, b : ArticleX) => b.pubDate.valueOf()-a.pubDate.valueOf()
@@ -25,11 +18,10 @@ const otherArticles : ArticleX[] = allBlogCollections.slice(1)
 
 let tagCollection : string[] = [];
 allBlogCollections.map(article => tagCollection.concat(article.tags))
-let tagSet = new Set(tagCollection);
-
 
 ---
 <MainLayout title='Recipe for disaster'>
+  <Testimonials/>
   <div class="grid grid-cols-1 gap-5 lg:grid-cols-2">
     <div>
       <h1 class="text-5xl font-bold mt-4 mb-8 leading-tight xl:text-6xl">

@@ -1,0 +1,10 @@
+---
+import {supabase} from '../lib/supabase'
+const {comment} = Astro.props
+
+---
+
+<div class="bg-gray-100 p-4 rounded-lg shadow-sm mb-4 mt-2">
+    <p class="font-semibold text-gray-800 mb-1">{comment.username}</p>
+    <p class="text-gray-600">{comment.text}</p>
+  </div>

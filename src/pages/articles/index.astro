@@ -2,6 +2,7 @@
 import MainLayout from '../../layouts/main.astro'
 import ArticleCard from '../../components/ArticleCard.astro';
 import {formatDate,getArticles} from "../../utils"
+import { supabase } from "../../lib/supabase";
 
 const articles = await getArticles();
 ---

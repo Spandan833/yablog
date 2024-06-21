@@ -5,6 +5,21 @@ import { getArticles } from '../../utils';
 import type { CollectionEntry } from 'astro:content';
 import ArticleCard from '../../components/ArticleCard.astro';
 import SearchForm from '../../components/SearchForm.astro';
+import { supabase } from "../../lib/supabase";
+
+const {slug} = Astro.params
+
+if(slug === undefined){
+    throw new Error("Not found");
+}
+
+const entries = await getArticles();
+
+const entry = entries.find(entry => entry.slug == slug);
+
+if(entry === undefined){
+    return Astro.redirect('/404')
+}
 const allBlogArticles = await getArticles();
 
 const  query = Astro.url.searchParams.get('query');

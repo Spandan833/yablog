@@ -3,6 +3,7 @@ import { SITE_TITLE } from "../constants";
 import { SITE_DESCRIPTION } from "../constants";
 import Navbar from "../components/Navbar.astro"
 import Footer from "../components/Footer.astro"
+import Testimonials from "../components/Testimonials.astro";
 const {title = "Recipe for disaster"} = Astro.props
 
 ---
@@ -26,7 +27,7 @@ const {title = "Recipe for disaster"} = Astro.props
   </head>
   <body class="">
     <Navbar/>
-    <section class="container mx-auto max-w-screen-xl mt-10 px-8">
+    <section class="container mx-auto max-w-screen-xl mt-1 px-8">
         <slot/>
     </section>
     <Footer/>

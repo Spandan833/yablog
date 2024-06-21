@@ -21,6 +21,7 @@ function capitalize(str : string) : string {
 }
 
 type ArticleX = {
+    id: number
     html: string,
     slug: string,
     title: string,
@@ -30,11 +31,12 @@ type ArticleX = {
     tags: string[],
 }
 
-const supabaseUrl = 'https://dfslbwfclnvgwatqglio.supabase.co'
+const supabaseUrl = process.env.SUPABASE_URL
 const supabaseKey = process.env.SUPABASE_KEY
 
-if(supabaseKey == undefined){
-    throw new Error("Undefined supabase key")
+
+if(supabaseKey == undefined || supabaseUrl == undefined){
+    throw new Error("Undefined supabase url or key")
 }
 
 const supabase = createClient(supabaseUrl, supabaseKey)
@@ -60,6 +62,7 @@ async function getArticles() : Promise<ArticleX[]> {
 
         //console.table(processedContent)
         dbArticles.push({
+            id:text.id,
             html: contentHtml,
             title: matterresult.data.title,
             imageUrl: text.imageUrl,
