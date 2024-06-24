@@ -2,7 +2,11 @@ import type { APIRoute } from "astro";
 import { supabase } from "../../lib/supabase";
 export const POST: APIRoute = async ({ request,redirect }) => {
     
-    const { data: { user } } = await supabase.auth.getUser()
+    const { data: { user }, error: err } = await supabase.auth.getUser()
+
+    if(err){
+        throw new Error(err.toString())
+    }
     console.log(user)
     if(user == undefined){
         return redirect("/signin")
