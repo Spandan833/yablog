@@ -1,45 +1,44 @@
 ---
-import Image from "astro/components/Image.astro"
-import logo from "../images/logo.jpeg"
+import { Image } from "astro:assets";
+import logo from "../images/logo.jpeg";
 ---
-<nav class="bg-gradient-to-r from-purple-700 to-indigo-800 text-white shadow-lg">
+
+<nav class="bg-white shadow-lg">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-16">
+    <div class="flex justify-between h-16">
       <div class="flex items-center">
         <a href="/" class="flex-shrink-0 flex items-center">
-          <Image src={logo} class="h-10 w-10" alt="TechPeople Logo" width={40} height={40}/>
-          <h1 class="text-xl mx-2">YaBlog</h1>
+          <Image src={logo} class="h-8 w-8 rounded-full" alt="YaBlog Logo" width={32} height={32} />
+          <span class="text-xl font-semibold text-gray-800 ml-2">YaBlog</span>
         </a>
-        <div class="hidden md:block">
-          <div class="ml-10 flex items-baseline space-x-4">
-            <a href="/" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-600 hover:text-white transition duration-150 ease-in-out">Home</a>
-            <a href="/articles" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-600 hover:text-white transition duration-150 ease-in-out">All Articles</a>
-            <a href="/about" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-600 hover:text-white transition duration-150 ease-in-out">About</a>
-          </div>
+        <div class="hidden md:ml-6 md:flex md:space-x-8">
+          <a href="/" class="inline-flex items-center px-1 pt-1 border-b-2 border-indigo-500 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">
+            Home
+          </a>
+          <a href="/articles" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+            Articles
+          </a>
+          <a href="/about" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+            About
+          </a>
         </div>
       </div>
-      <div class="hidden md:block">
-        <div class="ml-4 flex items-center md:ml-6">
-          <a href="/api/auth/signout" class="bg-purple-600 px-4 py-2 rounded-md text-sm font-medium hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-150 ease-in-out">Sign Out</a>
-        </div>
+      <div class="flex items-center">
+        <a href="/api/auth/signout" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          Sign Out
+        </a>
       </div>
-      <div class="-mr-2 flex md:hidden">
-        <button type="button" class="bg-purple-600 inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-purple-800 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
-          <span class="sr-only">Open main menu</span>
-          <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="md:hidden" id="mobile-menu">
-    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-      <a href="/" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-purple-600 hover:text-white transition duration-150 ease-in-out">Home</a>
-      <a href="/articles" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-purple-600 hover:text-white transition duration-150 ease-in-out">All Articles</a>
-      <a href="/about" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-purple-600 hover:text-white transition duration-150 ease-in-out">About</a>
-      <a href="/api/auth/signout" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-purple-600 hover:text-white transition duration-150 ease-in-out">Sign Out</a>
     </div>
   </div>
 </nav>
+
+<script>
+  const path = window.location.pathname;
+  const links = document.querySelectorAll('nav a');
+  links.forEach(link => {
+    if (link.getAttribute('href') === path) {
+      link.classList.remove('text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+      link.classList.add('border-indigo-500', 'text-gray-900');
+    }
+  });
+</script>

@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .nav-link {
+    @apply relative text-gray-300 hover:text-cyan-500 transition-colors duration-200;
+  }
+
+  .nav-link::after {
+    content: "";
+    @apply absolute inset-x-0 bottom-0 h-0.5 bg-cyan-500 transform scale-x-0 transition-transform duration-200;
+  }
+
+  .nav-link:hover::after {
+    @apply scale-x-100;
+  }
+
+  .techno-card {
+    @apply relative bg-gray-800 rounded-lg overflow-hidden;
+  }
+
+  .techno-card::before {
+    content: "";
+    @apply absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg blur opacity-30 transition duration-500;
+  }
+
+  .techno-card:hover::before {
+    @apply opacity-100;
+  }
+
+  .glow-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 to-blue-500;
+  }
+}

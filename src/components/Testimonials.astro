@@ -1,26 +1,43 @@
 ---
 import { Image } from "astro:assets";
-import doctorImage from "../images/doctor_image.jpeg"
+import doctorImage from "../images/doctor_image.jpeg";
 import { TESTIMONIAL } from "../constants";
 ---
 
-<section class="relative isolate overflow-hidden bg-white px-16 py-10 sm:py-15 lg:px-8">
-    <div class="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.100),white)] opacity-20"></div>
-    <div class="mx-auto max-w-2xl lg:max-w-4xl">
-      <figure class="mt-10">
-        <blockquote class="text-center text-xl font-semibold leading-8 text-gray-900 sm:text-2xl sm:leading-9">
-          <p>{TESTIMONIAL}</p>
-        </blockquote>
-        <figcaption class="mt-10">
-          <Image src={doctorImage} class="mx-auto h-10 w-10 rounded-full" alt="TechPeople Logo" width={80} height={80}/>
-          <div class="mt-4 flex items-center justify-center space-x-3 text-base">
-            <div class="font-semibold text-gray-900">Gregory House</div>
-            <svg viewBox="0 0 2 2" width="3" height="3" aria-hidden="true" class="fill-gray-900">
-              <circle cx="1" cy="1" r="1" />
-            </svg>
-            <div class="text-gray-600">HOD, Diagnostics</div>
+<section class="bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-8">
+      What Our Users Say
+    </h2>
+    <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+      <div class="px-6 py-8 sm:p-10 sm:pb-6">
+        <div class="flex items-center justify-center">
+          <Image
+            src={doctorImage}
+            class="h-20 w-20 rounded-full border-4 border-indigo-200"
+            alt="Gregory House"
+            width={80}
+            height={80}
+          />
+        </div>
+        <div class="mt-6 text-center">
+          <blockquote>
+            <p class="text-xl font-medium text-gray-900 leading-relaxed">
+              "{TESTIMONIAL}"
+            </p>
+          </blockquote>
+          <div class="mt-6">
+            <p class="text-base font-semibold text-indigo-600">Gregory House</p>
+            <p class="text-base text-gray-500">HOD, Diagnostics</p>
           </div>
-        </figcaption>
-      </figure>
+        </div>
+      </div>
+      <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
+        <span class="text-sm font-medium text-gray-500">Featured Testimonial</span>
+        <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500 transition duration-150 ease-in-out">
+          Read more testimonials &rarr;
+        </a>
+      </div>
     </div>
-  </section>
+  </div>
+</section>

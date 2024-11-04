@@ -1,34 +1,72 @@
 ---
 import type { ArticleX } from '../utils';
-import {formatDate} from '../utils'
+import { formatDate } from '../utils'
 import Tags from '../components/Tags.astro'
 
-const {article} = Astro.props
+const { article } = Astro.props
 
-interface Props{
-  article : ArticleX
+interface Props {
+  article: ArticleX
 }
 ---
-<div class="max-w-sm mx-auto mt-8">
-  <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out">
-    <a href={"/articles/" + article?.slug} class="block relative">
-      <img
-        src={article?.imageUrl}
-        alt="Article Image"
-        class="w-full h-56 object-cover transform hover:scale-105 transition duration-300 ease-in-out"
-      />
-      <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black opacity-50"></div>
+
+<div class="techno-card p-0">
+  <div class="relative">
+    <!-- Image container -->
+    <a href={"/articles/" + article?.slug} class="block">
+      <div class="relative h-48 overflow-hidden">
+        <img
+          src={article?.imageUrl}
+          alt={article?.title}
+          class="w-full h-full object-cover transform transition-transform duration-500 hover:scale-110"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent opacity-80"></div>
+      </div>
     </a>
-    <div class="p-6 relative">
+
+    <!-- Content -->
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-4">
+        <span class="text-sm text-cyan-400">{formatDate(article?.pubDate)}</span>
+        <div class="flex items-center text-gray-400">
+          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span class="text-sm">5 min read</span>
+        </div>
+      </div>
+
+      <h2 class="text-xl font-bold mb-3 text-white hover:text-cyan-400 transition-colors duration-200">
+        <a href={"/articles/" + article?.slug}>{article?.title}</a>
+      </h2>
+
+      <p class="text-gray-400 mb-4 line-clamp-2">
+        {article?.excerpt || "Click to read more about this exciting article!"}
+      </p>
+
       <div class="mb-4">
         <Tags tags={article.tags} />
       </div>
-      <h2 class="text-xl font-bold mb-2 text-gray-800 hover:text-indigo-600 transition duration-200">
-        <a href={"/articles/" + article?.slug}>{article?.title}</a>
-      </h2>
-      <p class="text-gray-500 text-sm">
-        {formatDate(article?.pubDate)}
-      </p>
+
+      <a 
+        href={"/articles/" + article?.slug}
+        class="inline-flex items-center px-4 py-2 bg-cyan-500 text-gray-900 rounded hover:bg-cyan-400 transition-colors duration-200"
+      >
+        Read More
+        <svg
+          class="w-4 h-4 ml-2"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
+      </a>
     </div>
   </div>
 </div>

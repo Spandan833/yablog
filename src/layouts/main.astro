@@ -1,35 +1,101 @@
 ---
-import { SITE_TITLE } from "../constants";
-import { SITE_DESCRIPTION } from "../constants";
-import Navbar from "../components/Navbar.astro"
-import Footer from "../components/Footer.astro"
-import Testimonials from "../components/Testimonials.astro";
-const {title = "Recipe for disaster"} = Astro.props
+import { SITE_TITLE, SITE_DESCRIPTION } from "../constants";
+import "../styles/base.css";
 
+const { title = "Welcome to TechBlog" } = Astro.props;
 ---
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={SITE_DESCRIPTION}/>
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.js"
-      integrity="sha512-BJ/5sR2hFxQTKin/55JQCcMTObShDBAmVjL/3NR/MVcrhyOazJjAgvROem03+HYyGw16SVdSfoWCFGr9syxAKA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
+    <meta name="description" content={SITE_DESCRIPTION} />
     <title>{SITE_TITLE} - {title}</title>
   </head>
-  <body class="">
-    <Navbar/>
-      <section class="container mx-auto max-w-screen-xl mt-1 px-8">
-          <slot/>
-      </section>
-    <Footer/>
-    </body>
-  </html>
+  <body class="min-h-screen bg-gray-900 text-cyan-500">
+    <!-- Animated background grid -->
+    <div class="fixed inset-0 z-0">
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20 animate-grid-flow"></div>
+    </div>
+
+    <!-- Glowing header -->
+    <header class="relative z-10 bg-gray-900/80 backdrop-blur-sm border-b border-cyan-500/50 shadow-lg">
+      <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+          <div class="flex items-center">
+            <a href="/" class="flex items-center space-x-2">
+              <div class="w-8 h-8 bg-cyan-500 rounded flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="16" x2="12" y2="12"/>
+                  <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+              </div>
+              <span class="text-xl font-bold glow-text">TechBlog</span>
+            </a>
+          </div>
+          
+          <div class="hidden md:flex space-x-8">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/articles" class="nav-link">Articles</a>
+            <a href="/about" class="nav-link">About</a>
+          </div>
+
+          <div class="flex items-center">
+            <a href="/signin" class="bg-cyan-500 text-gray-900 px-4 py-2 rounded hover:bg-cyan-400 transition-colors duration-200">
+              Sign In
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main content -->
+    <main class="relative z-10 max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <slot />
+    </main>
+
+    <!-- Glowing footer -->
+    <footer class="relative z-10 bg-gray-900/80 backdrop-blur-sm border-t border-cyan-500/50 mt-12">
+      <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h3 class="text-lg font-semibold mb-4 glow-text">About</h3>
+            <p class="text-gray-400">
+              Exploring the frontiers of technology with in-depth articles and analysis.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-4 glow-text">Quick Links</h3>
+            <ul class="space-y-2">
+              <li><a href="/articles" class="text-gray-400 hover:text-cyan-500 transition-colors duration-200">Articles</a></li>
+              <li><a href="/about" class="text-gray-400 hover:text-cyan-500 transition-colors duration-200">About</a></li>
+              <li><a href="/contact" class="text-gray-400 hover:text-cyan-500 transition-colors duration-200">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-4 glow-text">Connect</h3>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-400 hover:text-cyan-500 transition-colors duration-200">Twitter</a>
+              <a href="#" class="text-gray-400 hover:text-cyan-500 transition-colors duration-200">GitHub</a>
+              <a href="#" class="text-gray-400 hover:text-cyan-500 transition-colors duration-200">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<script>
+  // Active link highlighting
+  const path = window.location.pathname;
+  const links = document.querySelectorAll('.nav-link');
+  links.forEach(link => {
+    if (link.getAttribute('href') === path) {
+      link.classList.remove('text-gray-300');
+      link.classList.add('text-cyan-500');
+    }
+  });
+</script>

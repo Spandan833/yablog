@@ -6,7 +6,6 @@ import { HOMEPAGE_ARTICLE_LIMIT } from '../constants';
 import {formatDate, type ArticleX} from '../utils'
 import Tags from "../components/Tags.astro"
 import {getArticles} from '../utils.ts'
-import Testimonials from '../components/Testimonials.astro';
 
 const allBlogCollections : ArticleX[] = (await getArticles())
 .sort((a : ArticleX, b : ArticleX) => b.pubDate.valueOf()-a.pubDate.valueOf()
@@ -21,7 +20,6 @@ allBlogCollections.map(article => tagCollection.concat(article.tags))
 
 ---
 <MainLayout title='YaBlog'>
-  <Testimonials/>
   <div class="grid grid-cols-1 gap-5 lg:grid-cols-2">
     <div>
       <h1 class="text-5xl font-bold mt-4 mb-8 leading-tight xl:text-6xl">
@@ -35,28 +33,96 @@ allBlogCollections.map(article => tagCollection.concat(article.tags))
       <!-- Main Grid -->
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
     {otherArticles.slice(0,HOMEPAGE_ARTICLE_LIMIT).map(article => (
-      <div class="max-w-md mx-auto mt-10">
-      <div class="bg-white rounded-lg overflow-hidden shadow-lg">
-        <a href={"/articles/"+article.slug}>
+      <div class="max-w-md mx-auto mt-10 group">
+  <!-- Glowing container with hexagonal clip-path -->
+  <div class="relative bg-gray-800 overflow-hidden">
+    <!-- Hexagonal clip and glow effect -->
+    <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    
+    <!-- Glowing border lines -->
+    <div class="absolute inset-0">
+      <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+      <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+      <div class="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-cyan-500 to-transparent transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500"></div>
+      <div class="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-blue-500 to-transparent transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="relative">
+      <a href={"/articles/"+article.slug} class="block relative">
+        <div class="relative h-48 overflow-hidden">
           <img
             src={article.imageUrl}
             alt="Article Image"
-            class="w-full h-48 object-cover hover:opacity-75 transition duration-300 ease-in-out"
+            class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
           />
-        </a>
-        <div class="p-6">
-          <h2 class="text-2xl font-semibold mb-2">
-            <a href={"/articles/"+article.slug}> {article.title} </a>
-          </h2>
-          <p class="text-gray-600 text-sm mb-4">{formatDate(article.pubDate)}</p>
-          <Tags tags={article.tags}/>
+          <!-- Cyber overlay -->
+          <div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60"></div>
+          <div class="absolute inset-0 bg-[linear-gradient(45deg,#00000000_25%,#ffffff10_50%,#00000000_75%)] bg-[length:250%_250%] group-hover:animate-scan"></div>
+        </div>
+      </a>
+
+      <div class="p-6 relative">
+        <!-- Tech decoration lines -->
+        <div class="absolute top-0 left-6 w-8 h-px bg-cyan-500/50"></div>
+        <div class="absolute top-0 left-6 w-px h-8 bg-cyan-500/50"></div>
+        
+        <div class="space-y-4">
+          <!-- Title with cyber decoration -->
+          <div class="relative">
+            <h2 class="text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors duration-300">
+              <a href={"/articles/"+article.slug}>
+                {article.title}
+              </a>
+            </h2>
+          </div>
+
+          <!-- Date with tech styling -->
+          <div class="flex items-center space-x-2 text-sm text-cyan-400/80">
+            <svg 
+              class="w-4 h-4" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path 
+                stroke-linecap="round" 
+                stroke-linejoin="round" 
+                stroke-width="2" 
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+              />
+            </svg>
+            <span>{formatDate(article.pubDate)}</span>
+          </div>
+
+          <!-- Tags -->
+          <div class="pt-2">
+            <Tags tags={article.tags}/>
+          </div>
         </div>
       </div>
-      </div>
+    </div>
+  </div>
+</div>
     ))}
   </div>
 
 
 </MainLayout>
+
+<style>
+  @keyframes scan {
+    0% {
+      background-position: -100% -100%;
+    }
+    100% {
+      background-position: 200% 200%;
+    }
+  }
+
+  .animate-scan {
+    animation: scan 3s linear infinite;
+  }
+</style>
       <!-- Top Grid -->
       
