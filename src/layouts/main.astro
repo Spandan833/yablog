@@ -1,8 +1,12 @@
 ---
 import { SITE_TITLE, SITE_DESCRIPTION } from "../constants";
 import "../styles/base.css";
+import { supabase } from "../lib/supabase";
 
 const { title = "Welcome to TechBlog" } = Astro.props;
+
+// Check if the user is signed in
+const { data: { user } } = await supabase.auth.getUser();
 ---
 
 <!DOCTYPE html>
@@ -42,10 +46,22 @@ const { title = "Welcome to TechBlog" } = Astro.props;
             <a href="/about" class="nav-link">About</a>
           </div>
 
-          <div class="flex items-center">
-            <a href="/signin" class="bg-cyan-500 text-gray-900 px-4 py-2 rounded hover:bg-cyan-400 transition-colors duration-200">
-              Sign In
-            </a>
+          <div class="flex items-center space-x-4">
+            <!-- Conditionally render Submit button if user is signed in -->
+            {user ? (
+              <>
+                <a href="/submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">
+                  Submit
+                </a>
+                <a href="/api/auth/signout" class="bg-cyan-500 text-gray-900 px-4 py-2 rounded hover:bg-cyan-400 transition duration-200">
+                  Sign Out
+                </a>
+              </>
+            ) : (
+              <a href="/signin" class="bg-cyan-500 text-gray-900 px-4 py-2 rounded hover:bg-cyan-400 transition duration-200">
+                Sign In
+              </a>
+            )}
           </div>
         </div>
       </nav>
