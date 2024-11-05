@@ -1,0 +1,19 @@
+<!-- File: src/components/BlogSubmitForm.astro -->
+<form action="/api/articles/submit" method="POST" class="space-y-4 max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold mb-4 text-gray-800">Submit a New Blog Post</h2>
+    
+    
+    
+    <div>
+      <label for="content" class="block text-sm font-medium text-gray-700">Content</label>
+      <textarea id="content" name="content" required class="w-full p-2 border border-gray-300 rounded mt-1"></textarea>
+    </div>
+    
+    <div>
+      <label for="image_url" class="block text-sm font-medium text-gray-700">Image URL</label>
+      <input type="url" id="image_url" name="image_url" class="w-full p-2 border border-gray-300 rounded mt-1" />
+    </div>
+    
+    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Submit Post</button>
+  </form>
+  
