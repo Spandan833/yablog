@@ -42,7 +42,7 @@ async function getArticles(): Promise<ArticleX[]> {
   // Step 1: Fetch articles from the public.article table
   const { data: articles, error: articlesError } = await supabase
     .from("article")
-    .select("id, text, imageUrl, author_id");
+    .select("id, text, imageUrl, author_name");
 
   if (articlesError) {
     console.error("Error fetching articles:", articlesError);
